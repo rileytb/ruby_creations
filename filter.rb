@@ -54,7 +54,6 @@ end
 
 # create year dir
 def create_year_dir(year)
-  #TODO - when creating, needs to have 1 January, 2 February, etc
   Dir.mkdir(year)
   Dir.chdir(year)
   i = 1
@@ -81,7 +80,15 @@ if @default_dirs.include? @dir.downcase
   @dir = "C:\\Users\\#{@user}\\#{@dir}"
 end
 
+
 puts "Preparing to filter: #{@dir} ..."
+puts "Do you want to continue? "
+input = gets.chomp
+
+if input.downcase != "y" && input.downcase != "yes"
+  exit
+end
+
 Dir.chdir(@dir)
 Dir.foreach(@dir) do |file|
   name = file.split('.')
