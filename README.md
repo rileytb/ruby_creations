@@ -14,20 +14,21 @@ This script will look through the specified directory for any file types that ma
 Any that are of those types then have their Modified Date checked, and
   > Output the directory that will be filtered and ask the user for confirmation (aborts if n/no)
   > Check that the Year directory (i.e. 2015) exists
-    >> If the year directory doesn't exist, create the Year directory. To add all month directories with this creation use --fulldir, then moves the picture
 
-    >> If the Year directory exists, and the Month directory (i.e. 06 June) doesn't, it will be created, then moves the picture
+  >If the year directory doesn't exist, create the Year directory. To add all month directories with this creation use --fulldir, then moves the picture
 
-    >> If the Year directory exists, and the Month directory exists, and the picture name is already used, append _filtered to the end of name, then moves the picture (TIP: after running the filter script, search the directory filtered for _filtered to see if renaming could be needed)
+  > If the Year directory exists, and the Month directory (i.e. 06 June) doesn't, it will be created, then moves the picture
 
-    >> If the Year and Month directories exist and the picture's name is not already in use then moves the picture
+  > If the Year directory exists, and the Month directory exists, and the picture name is already used, append _filtered to the end of name, then moves the picture (TIP: after running the filter script, search the directory filtered for _filtered to see if renaming could be needed)
+
+  > If the Year and Month directories exist and the picture's name is not already in use then moves the picture
 
   > It will output the move in this format if successful: mv [file_name] [year_dir]/[month_dir]/[file_name]
 
   >Writes to filter_log. Use this to check for any renames or failed copies.
 
 
-**Usage Example:** ruby filter_64.exe -d pictures
+**Usage Example:** ruby filter_64.exe -d pictures -f -a _duplicate
 
 **Options:**
 
