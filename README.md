@@ -1,5 +1,5 @@
-# ruby_creations
-Tasks written in ruby
+# ruby_file_filter
+Media location filter created in ruby
 
 This 'filter' script is intended to move media (only pictures for now) into the file structure that I use for my media. This saves time when copying from a storage device, and allows for consistent media storage.
 
@@ -32,10 +32,12 @@ Any that are of those types then have their Modified Date checked, and
 
 **Options:**
 
-  >-d, --dir [directory] Full path of where to filter. Can use Pictures, Documents, and Desktop for local Library locations. (Defaults to the C:\Users\<CurrentUser>\Pictures)
+  > -d, --dir [directory] Full path of where to filter. Can use Pictures, Documents, and Desktop for local Library locations. (Defaults to the C:\Users\<CurrentUser>\Pictures)
 
   > -f, --fulldir When creating a year directory because it didn't exist, add in all the months, not just those that will be necessary.
 
   > -a, --append [text] When moving over files if a duplicate is found, append this text (Defaults to _filtered)
 
 **NOTE: Using filter_32.exe on 32-bit operating systems is required**
+
+Custom compiling: ocra --output <name> --icon funnel.ico filter.rb -- -d pictures

@@ -100,7 +100,7 @@ end
 
 
 puts "Preparing to filter: #{@dir} ..."
-puts "Do you want to continue? "
+puts "Do you want to continue? (y/n)"
 input = gets.chomp
 
 #  Doing it this way so everything but positive exits
