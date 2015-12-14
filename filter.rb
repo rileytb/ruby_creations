@@ -2,6 +2,7 @@ require 'optparse'
 require 'etc'
 require 'fileutils'
 require 'date'
+require 'exifr'
 
 @log_file = File.new("filter_log.txt", "a")
 @log_file.puts "------------------------------------------"
@@ -34,23 +35,35 @@ OptionParser.new do |opts|
   opts.on("-a", "--append [text]", "Text to append to duplicate items; defaults to _filtered") do |a|
     options[:append] = a
   end
+  # use Modified (over date taken on JPGs)
+  opts.on("-m", "--modified", "Use the 'modified' field for JPGs instead of Date Taken") do |m|
+    options[:modified] = m
+  end
 end.parse!
 
 @dir = options[:dir] || "pictures"
 @full_dir = options[:full_dir] || false
 @name_appendage = options[:append] || "_filtered"
+@modified = options[:modified] || false
 
 # ------------- #
 # Functions
 # ------------- #
 
 # return date in name
-def get_time(name)
+def get_modified_date(name)
   m_date = File.stat(name).mtime.to_s
   time_array = m_date.split("-")
-  year = time_array[0]
-  month = time_array[1]
-  return year, month
+  return time_array[0], time_array[1]
+end
+
+# gets JPEG date taken
+def get_taken_date(name)
+  data = EXIFR::JPEG.new(name)
+  date_taken = data.date_time_original
+  temp = date_taken.to_s.split(' ')
+  date = temp[0].split('-')
+  return date[0], date[1]
 end
 
 # move files to year directory
@@ -98,8 +111,7 @@ if @default_dirs.include? @dir.downcase
   @dir = "C:\\Users\\#{@user}\\#{@dir}"
 end
 
-
-puts "Preparing to filter: #{@dir} ..."
+puts "Preparing to filter: #{@dir}"
 puts "Do you want to continue? (y/n)"
 input = gets.chomp
 
@@ -118,7 +130,12 @@ Dir.foreach(@dir) do |file|
   name = file.split('.')
   ext = name[name.length - 1].downcase unless !name[1]
   if @default_exts.include? ext
-    year, month = get_time(file)
+    if (ext == "jpg" && !@modified)
+      year, month = get_taken_date(file)
+    else
+      year, month = get_modified_date(file)
+    end
+
     full_month = month + " " + Date::MONTHNAMES[month.to_i]
     full_path = year + '/' + full_month
 

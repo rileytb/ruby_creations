@@ -38,6 +38,8 @@ Any that are of those types then have their Modified Date checked, and
 
   > -a, --append [text] When moving over files if a duplicate is found, append this text (Defaults to _filtered)
 
+  > -m, --modified For JPG files, This is used if when the JPG pictures were taken, the camera's date was not set correctly. This could be then used to get the modified date instead, which could be closer to the date taken.
+
 **NOTE: Using filter_32.exe on 32-bit operating systems is required**
 
 Custom compiling: ocra --output <name> --icon funnel.ico filter.rb -- -d pictures
