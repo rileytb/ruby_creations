@@ -42,4 +42,6 @@ Any that are of those types then have their Modified Date checked, and
 
 **NOTE: Using filter_32.exe on 32-bit operating systems is required**
 
+**TODO: check if date exists**
+
 Custom compiling: ocra --output filter_64.exe --icon funnel.ico filter.rb -- -d pictures
