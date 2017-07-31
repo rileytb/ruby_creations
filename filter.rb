@@ -50,14 +50,18 @@ end.parse!
 # Functions
 # ------------- #
 
+# ----------------------------------
 # return date in name
+# ----------------------------------
 def get_modified_date(name)
   m_date = File.stat(name).mtime.to_s
   time_array = m_date.split("-")
   return time_array[0], time_array[1]
 end
 
+# ----------------------------------
 # gets JPEG date taken
+# ----------------------------------
 def get_taken_date(name)
   data = EXIFR::JPEG.new(name)
   date_taken = data.date_time_original
@@ -66,7 +70,9 @@ def get_taken_date(name)
   return date[0], date[1]
 end
 
+# ----------------------------------
 # move files to year directory
+# ----------------------------------
 def move_files (file, location)
   new_loc = location.to_s + '/' + file
 
@@ -81,7 +87,9 @@ def move_files (file, location)
   return result, new_loc
 end
 
+# ----------------------------------
 # create year dir
+# ----------------------------------
 def create_year_dir(year)
   Dir.mkdir(year)
 
@@ -96,7 +104,9 @@ def create_year_dir(year)
   end
 end
 
+# ----------------------------------
 # Just creates the month dir: # NAME
+# ----------------------------------
 def create_month_dir(year, month)
   Dir.mkdir(year + "/" + month + " " + Date::MONTHNAMES[month.to_i])
 end
