@@ -6,15 +6,21 @@ require 'exifr'
 
 @log_file = File.new("filter_log.txt", "a")
 @log_file.puts "------------------------------------------"
-@default_exts = [
+@default_exts = {
+  pictures: [
   "jpg",
   "png",
   "gif"
-]
+  ],
+  videos: [
+    "mov",
+    "mp4",
+    "mts",
+    "3gp"
+  ]}
 @default_dirs = [
   "pictures",
-  "documents",
-  "desktop"
+  "videos"
 ]
 
 #-------------------#
@@ -55,7 +61,8 @@ end.parse!
 # ----------------------------------
 def get_modified_date(name)
   m_date = File.stat(name).mtime.to_s
-  time_array = m_date.split("-")
+  time_array = m_date.split("-") unless !m_date
+  return false, false unless time_array.length > 1
   return time_array[0], time_array[1]
 end
 
@@ -117,6 +124,7 @@ end
 # If passed one of the filterable libraries,
 # find the username to change to that dir
 if @default_dirs.include? @dir.downcase
+  @default_exts = @default_exts[@default_dirs.downcase]
   @user = Etc.getlogin
   @dir = "C:\\Users\\#{@user}\\#{@dir}"
 end
@@ -159,14 +167,13 @@ Dir.foreach(@dir) do |file|
       create_month_dir(year, month)
     end
 
-    report, new_loc = move_files( file, full_path )
+    report, new_loc = move_files(file, full_path)
 
     if report > 0
       @log_file.puts("Moving #{file} to #{new_loc} - move failed!!!")
     else
       @log_file.puts("Moving #{file} to #{new_loc}")
     end
-
   end
 end
 
